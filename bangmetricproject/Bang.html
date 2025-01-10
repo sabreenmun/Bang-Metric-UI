@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bang Metric Calculator</title>
+    <link rel="stylesheet" href="Bang.css">
+</head>
+<body>
+    <header>
+        <div class="title-bar">
+            <img src="calculator.jpeg" alt="Logo" width="50" height="70">
+            <h2>Bang Metric Calculator</h2>
+            
+            <button class="aboutbtn" onclick="openAbout()">ABOUT</button>
+            <button class="helpbtn" onclick="openHelp()">?</button>
+        </div>
+    
+       <!-- About Box -->
+        <div id="aboutBox" style="display: none;">
+            <div class="about-content">
+                <button class="closebtn" onclick="closeAbout()">CLOSE</button>
+                <h3>ABOUT</h3>
+                <hr>
+                <p>This calculator is based on Demarco's Bang Function. It calculates the "Bang Metric" by evaluating function primitives and their associated token counts. The token counts have preset weights, and each function primitive is assigned a weight based on its class. These weights are predefined for different classes of primitives and are used in the calculation of the Bang Metric score.</p>
+                
+                <h4>Weights for function primitives:</h4>
+                <ul>
+                    <li>Separation: 0.6</li>
+                    <li>Amalgamation: 0.6</li>
+                    <li>Switching: 0.3</li>
+                    <li>Simple Update: 0.5</li>
+                    <li>Storage Management: 1.0</li>
+                    <li>Edit: 0.8</li>
+                    <li>Coherency: 1.0</li>
+                    <li>Text Manipulation: 1.0</li>
+                    <li>Synchronization: 1.5</li>
+                    <li>Formatting: 1.0</li>
+                    <li>Display: 1.8</li>
+                    <li>Summarizing: 1.0</li>
+                    <li>Arithmetic: 0.7</li>
+                    <li>Initiation: 1.0</li>
+                    <li>Computation: 2.0</li>
+                    <li>Device Management: 2.5</li>
+                </ul>
+                
+                <h4>Weights for token counts (2 to 20):</h4>
+                <ul>
+                    <li>2: 1.0</li>
+                    <li>3: 2.4</li>
+                    <li>4: 4.0</li>
+                    <li>5: 5.8</li>
+                    <li>6: 7.8</li>
+                    <li>7: 9.8</li>
+                    <li>8: 12.0</li>
+                    <li>9: 14.3</li>
+                    <li>10: 16.6</li>
+                    <li>11: 19.0</li>
+                    <li>12: 21.5</li>
+                    <li>13: 24.1</li>
+                    <li>14: 26.7</li>
+                    <li>15: 29.3</li>
+                    <li>16: 32.0</li>
+                    <li>17: 34.7</li>
+                    <li>18: 37.6</li>
+                    <li>19: 40.4</li>
+                    <li>20: 43.2</li>
+                </ul>
+
+                <hr>
+                <p>All credits due to Tom Demarco.</p>
+            </div>
+        </div>
+
+
+    
+        <!-- Help Box -->
+        <div id="helpBox" style="display: none;">
+            <div class="help-content">
+                <button class="closebtn" onclick="closeHelp()">CLOSE</button>
+                <h3>HELP GUIDE</h3>
+                <hr>
+                <ul>
+                    <li>Click 'Add Primitive' to add a new function primitive.</li>
+                    <li>Enter the token count for each function primitive you add.</li>
+                    <li>You can add as many primitives as needed.</li>
+                    <li>To remove a primitive, click the 'x' button next to it.</li>
+                    <li>Once all fields are filled out, click 'Calculate' to get the Bang Metric score and classification.</li>
+                    <li>Click 'Clear' to reset the form.</li>
+                    <li>If you wish to save the data, click 'Save'.</li>
+                </ul>
+                <hr>
+                <p>All credits due to Tom Demarco.</p>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <form id="bangCalculatorForm">
+            <div id="primitiveFields">
+                <div class="primitive">
+                    <div class="form-group">
+                        <label for="tokens">Tokens count: </label>
+                        <input type="number" class="tokens" name="tokens" min="2" max="20" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="class">Function Primitive: </label>
+                        <select class="class" name="class" required>
+                            <option value="">Select a Class</option>
+                            <option value="0.6">Separation</option>
+                            <option value="0.6">Amalgamation</option>
+                            <option value="0.3">Switching</option>
+                            <option value="0.5">Simple Update</option>
+                            <option value="1.0">Storage Management</option>
+                            <option value="0.8">Edit</option>
+                            <option value="1.0">Coherency</option>
+                            <option value="1.0">Text Manipulation</option>
+                            <option value="1.5">Synchronization</option>
+                            <option value="1.0">Formatting</option>
+                            <option value="1.8">Display</option>
+                            <option value="1.0">Summarizing</option>
+                            <option value="0.7">Arithmetic</option>
+                            <option value="1.0">Initiation</option>
+                            <option value="2.0">Computation</option>
+                            <option value="2.5">Device Management</option>
+                        </select>
+                    </div>
+
+                   
+                </div>
+            </div>
+
+            <button type="button" id="addPrimitive" class="btn btn-add">Add Primitive</button>
+
+            <div class="action-buttons">
+                <button type="submit" id="calculatePrimitive" class="btn btn-calculate">Calculate</button>
+                <button type="button" id="clearForm" class="btn btn-clear">Clear</button>
+                <button type="button" id="saveBMC" class="btn btn-save">Save</button>
+            </div>
+    
+        </form>
+
+   
+
+        <div id="results" class="results" style="display: none;">
+            <p><strong>SCORE:</strong> <span id="bangResult">0</span></p>
+            <p><strong>CLASSIFICATION:</strong> <span id="classificationResult"></span></p>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Bang Metric Calculator. All rights reserved.</p>
+    </footer>
+    <script src="Bang.js"></script>
+</body>
+</html>
